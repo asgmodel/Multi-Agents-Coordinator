@@ -1,36 +1,41 @@
 ---
 name: multi-agent-project-coordinator
-description: Plan and coordinate a small AI engineering team across GitHub projects, triage and assign tasks, and require evidence and owner approval before integration. Use for orchestrating AI coding agents, GitHub branch workflows, project task dispatch, and multi-agent delivery reviews.
+description: Plan and coordinate AI engineering teams across GitHub projects, assign and track tasks, collect verification evidence and require approval for changes to linked repositories. Use for multi-agent GitHub coordination and engineering workflow management.
 ---
 
 # Multi-Agent Project Coordinator
 
-## When to use
+## Scope
 
-Use when a project owner wants to form or coordinate AI engineering roles, break down work, assign tasks, or safely coordinate changes across GitHub repositories.
-This skill is an *instruction set*, not a daemon, autonomous LLM worker, or authorization to modify target repositories.
+A repository-installable skill for human-directed agent coordination. Agent definitions alone **do not** launch autonomous workers. The coordinator repository's **only editing branch is `main`**. Linked target projects have separate branch policies that must be discovered before changing them.
 
-## Workflow
+## Procedure
 
-1. **Discover:** Ask for or inspect the target repository, product scope, technology, environment, budgets, and risks. Do not invent repository access, credentials, or model runtime.
-2. **Propose:** Recommend the smallest useful team: 1–2 agents for small projects, 3–4 for typical apps, 5–8 only when separate specialties justify them. Explain assignments and ask the owner to approve team scope, permissions, and expenses.
-3. **Configure:** Read `agents/team.json` and `agents/branch-policy.json` in this coordinator repository as the authoritative team and workflow definitions. Preserve existing target project settings.
-4. **Register and plan:** For each target project, record a single `tasks/<project>/tasks.json`, with task ID, priority, assignee, dependencies, acceptance criteria, evidence, and last update. Do not duplicate task records or infer derived dependencies.
-5. **Preview dispatch:** Use `agentsctl dispatch --project <slug>` to **propose** assignments. Only after approval, `agentsctl dispatch --project <slug> --apply` makes local JSON assignments. Neither command executes agents or changes GitHub projects.
-6. **Coordinate work:** Human- or tool-invoked developers change only approved paths, run tests, and submit PRs to `tester`. Treat role definitions under `.github/agents/` as instructions, not live workers.
-7. **Review and integrate:** Verify PR, test evidence, dependencies, and security. Require explicit owner authorization before merge/deploy/delete/force-push. Mark DONE only after independent review, passed tests, approval, and evidence.
-8. **Report:** Show PLANNED, NOT TESTED and VERIFIED accurately; summarize progress, risks, blockers, cost, and next approval.
+1. **Discover:** Inspect the target project repository, goal, stack, integrations, risks, budgets and permissions. Do not assume credentials or paid tool access.
+2. **Propose a team:** Recommend 1–2 agents for small projects, 3–4 for typical apps, and 5–8 only if separate specialties justify the extra coordination. Present model/provider choices as proposed until configured; request owner approval of team, costs and access.
+3. **Configure:** Treat `agents/team.json` and `agents/branch-policy.json` as authoritative. Follow `AGENTS.md`. Keep the coordinator repository's edits on **main only**, and preserve each target repository's existing branches.
+4. **Plan:** Register a target project once and store its tasks in one `tasks/<project>/tasks.json`. Each task has unique ID, priority, owner, dependencies, acceptance, artifacts, evidence and the latest action.
+5. **Assign:** `agentsctl dispatch --project <slug>` shows a proposal. Only after owner approval use `agentsctl dispatch --project <slug> --apply` to assign records. Neither command calls models or changes GitHub.
+6. **Implement and review:** An explicitly authorized worker can implement a task in a target project following that project's permissions, testing and review practices. Do not automatically commit or merge to target projects, deploy or remove branches.
+7. **Verify:** Mark DONE only with passing tests, a reviewer other than the author, explicit owner approval, supporting evidence, completed dependencies and resolved blockers.
+8. **Report:** Show PLANNED / IN_PROGRESS / IN_REVIEW / BLOCKED / DONE accurately and distinguish NOT TESTED from VERIFIED.
 
-## CLI quick start
-
-From the coordinator repository after `python -m pip install -e .`:
+## Install from GitHub
 
 ```bash
-agentsctl init --project demo --repo owner/target-repo
-agentsctl add --project demo --id B01 --title 'Backend API pagination' --priority P1 --accept 'Paginated response verified'
+npx skills add asgmodel/Multi-Agents-Coordinator --skill multi-agent-project-coordinator
+```
+
+The CLI can be installed separately via `python -m pip install "git+https://github.com/asgmodel/Multi-Agents-Coordinator.git@main"`.
+
+## Task CLI
+
+```bash
+agentsctl init --project demo --repo owner/project
+agentsctl add --project demo --id B01 --title "Backend API" --priority P1
 agentsctl dispatch --project demo
 agentsctl report --project demo
 agentsctl validate
 ```
 
-Only use `--apply` after owner approval. Verify project branch names: this coordinator uses `main`, `tester`, `dev`, `AI-01` to `AI-04`, and `Multi-Agents-Coordinator`; target repositories may differ. Never commit secrets or misrepresent automated execution.
+Never claim that agents, integration, deployment, or CI have been run just because this skill is present.

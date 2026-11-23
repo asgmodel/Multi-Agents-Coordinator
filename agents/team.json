@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "approval_status": "PROPOSED",
+  "max_total_parallel_tasks": 4,
+  "agents": [
+    {
+      "id": "AI-01",
+      "order": 1,
+      "role": "Backend, Data & Security",
+      "objective": "Build secure APIs, database and backend",
+      "model": {
+        "provider": "not-configured",
+        "name": "owner-selection-required"
+      },
+      "capabilities": [
+        "API",
+        "database",
+        "security",
+        "tests"
+      ],
+      "keywords": [
+        "backend",
+        "api",
+        "database",
+        "sql",
+        "security",
+        "auth",
+        "خلف",
+        "قاعدة",
+        "بيانات",
+        "حماية"
+      ],
+      "allowed_paths": [
+        "server/",
+        "backend/",
+        "tests/"
+      ],
+      "forbidden_actions": [
+        "merge",
+        "deploy",
+        "secrets"
+      ],
+      "inputs": [
+        "approved task",
+        "API contract"
+      ],
+      "deliverables": [
+        "code",
+        "tests",
+        "PR"
+      ],
+      "reviewer": "AI-04",
+      "max_active_tasks": 2,
+      "monthly_budget_usd": 0
+    },
+    {
+      "id": "AI-02",
+      "order": 2,
+      "role": "Frontend & UX",
+      "objective": "Deliver responsive accessible interfaces",
+      "model": {
+        "provider": "not-configured",
+        "name": "owner-selection-required"
+      },
+      "capabilities": [
+        "React",
+        "TypeScript",
+        "UX",
+        "E2E tests"
+      ],
+      "keywords": [
+        "frontend",
+        "react",
+        "typescript",
+        "ui",
+        "ux",
+        "interface",
+        "css",
+        "واجهة",
+        "تصميم",
+        "جوال"
+      ],
+      "allowed_paths": [
+        "web/",
+        "frontend/",
+        "tests/"
+      ],
+      "forbidden_actions": [
+        "merge",
+        "deploy",
+        "secrets"
+      ],
+      "inputs": [
+        "approved task",
+        "design",
+        "API contract"
+      ],
+      "deliverables": [
+        "UI",
+        "tests",
+        "PR"
+      ],
+      "reviewer": "AI-04",
+      "max_active_tasks": 2,
+      "monthly_budget_usd": 0
+    },
+    {
+      "id": "AI-03",
+      "order": 3,
+      "role": "AI & Integrations",
+      "objective": "Guarded AI and integration workflows",
+      "model": {
+        "provider": "not-configured",
+        "name": "owner-selection-required"
+      },
+      "capabilities": [
+        "LLM",
+        "RAG",
+        "AI agents",
+        "integrations"
+      ],
+      "keywords": [
+        "ai",
+        "agent",
+        "rag",
+        "llm",
+        "openai",
+        "gemini",
+        "whatsapp",
+        "integration",
+        "ذكاء",
+        "وكيل",
+        "تكامل",
+        "نماذج"
+      ],
+      "allowed_paths": [
+        "integrations/",
+        "ai/",
+        "tests/"
+      ],
+      "forbidden_actions": [
+        "merge",
+        "deploy",
+        "secrets",
+        "paid API without approval"
+      ],
+      "inputs": [
+        "approved task",
+        "integration contract"
+      ],
+      "deliverables": [
+        "integration",
+        "tests",
+        "PR"
+      ],
+      "reviewer": "AI-04",
+      "max_active_tasks": 2,
+      "monthly_budget_usd": 0
+    },
+    {
+      "id": "AI-04",
+      "order": 4,
+      "role": "Coordinator, DevOps & QA",
+      "objective": "Coordinate, review and quality-gate approved changes",
+      "model": {
+        "provider": "not-configured",
+        "name": "owner-selection-required"
+      },
+      "capabilities": [
+        "planning",
+        "CI",
+        "QA",
+        "GitHub review"
+      ],
+      "keywords": [
+        "qa",
+        "devops",
+        "ci",
+        "cd",
+        "test",
+        "deploy",
+        "build",
+        "release",
+        "github",
+        "نشر",
+        "اختبار",
+        "جودة",
+        "مهام",
+        "تنسيق"
+      ],
+      "allowed_paths": [
+        ".github/",
+        "scripts/",
+        "tests/"
+      ],
+      "forbidden_actions": [
+        "merge without owner approval",
+        "deploy without owner approval",
+        "force push"
+      ],
+      "inputs": [
+        "approved project plan",
+        "PR evidence",
+        "checks"
+      ],
+      "deliverables": [
+        "plan",
+        "review",
+        "report"
+      ],
+      "reviewer": "project owner",
+      "max_active_tasks": 2,
+      "monthly_budget_usd": 0
+    }
+  ]
+}

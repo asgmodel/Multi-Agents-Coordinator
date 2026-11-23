@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "coordinator_branch": "main",
+  "allowed_edit_branches": [
+    "main"
+  ],
+  "create_agent_branches": false,
+  "create_task_branches": false,
+  "default_branch": "main",
+  "project_policy_scope": "This policy applies to the coordinator repository; other repositories retain their own branch settings.",
+  "protected_operations": [
+    "deploy",
+    "delete branch",
+    "force push",
+    "change secrets",
+    "merge into external repositories"
+  ],
+  "requires": {
+    "owner_authorization_for_project_changes": true,
+    "tests_for_verified_tasks": true,
+    "owner_approval_for_deployment": true
+  },
+  "automatic_merge": false,
+  "automatic_deployment": false
+}
